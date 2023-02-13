@@ -12,7 +12,7 @@ import Detail from './routes/Detail.js';
 
 function App() {
   let [shoes] = useState(data);
-  useNavigate();
+  let navigate = useNavigate();
 
   return (
     <div className='App'>
@@ -20,12 +20,13 @@ function App() {
         <Container>
           <Navbar.Brand href='#home'>ShoeShop</Navbar.Brand>
           <Nav className='me-auto'>
-            <Nav.Link href='#home'>Home</Nav.Link>
-            <Nav.Link href='#features'>Cart</Nav.Link>
-            <Nav.Link href='#pricing'>Pricing</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link> 
+            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
+      
 
       {/* <Link to='/'>홈</Link>
       <Link to='/detail'>상세페이지</Link> */}
@@ -52,7 +53,13 @@ function App() {
             </>
           }
         />
+        <Route path='*' element={<div>404페이지</div>} /> 
         <Route path='/detail' element={<Detail></Detail>} />
+        <Route path='/about' element={<About></About>}>
+          <Route path='member' element={<div>멤버임</div>}/>
+          <Route path='location' element={<div>위치정보임</div>}/>
+        </Route>
+
       </Routes>
 
       {/* <div
@@ -86,6 +93,15 @@ function Card(props) {
       <p>{props.shoes.price}</p>
     </div>
   );
+}
+
+function About(){
+  return (
+    <div>
+      <h4>회사정보임</h4>
+      <Outlet></Outlet>
+    </div>
+  )
 }
 
 export default App;
