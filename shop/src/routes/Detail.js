@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -15,7 +16,15 @@ import styled from 'styled-components';
 //   padding: 20px;
 // `
 
+
 function Detail(props) {
+
+  useEffect(()=>{ 
+    //useEffect 안에 적는 코드들은 1.어려운 연산 2.서버에서 데이터 가져오는 작업 3. 타이머 장착하는 것
+    console.log('안녕');
+  })
+
+  let[count, setCount] = useState(0)
 
   let {id} = useParams();
   let 찾은상품 = props.shoes.find(function(x){
@@ -24,6 +33,8 @@ function Detail(props) {
 
   return (
     <div className='container'>
+      {count}
+      <button onClick={()=>{setCount(count+1)}}>버튼</button>
       {/*styled-components 사용 예시
       <Box>
       <YellowBtn bg='blue'>버튼</YellowBtn>
