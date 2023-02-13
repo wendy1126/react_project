@@ -45,8 +45,8 @@ function App() {
               <div className='container'>
                 <div className='row'>
                   {shoes.map(function (a, i) {
-                    return;
-                    <Card shoes={shoes[i]} i={i}></Card>;
+                    return(
+                    <Card shoes={shoes[i]} i={i}></Card>)
                   })}
                 </div>
               </div>
@@ -54,7 +54,9 @@ function App() {
           }
         />
         <Route path='*' element={<div>404페이지</div>} /> 
-        <Route path='/detail' element={<Detail></Detail>} />
+
+        <Route path='/detail/:id' element={<Detail shoes={shoes}></Detail>} />
+
         <Route path='/about' element={<About></About>}>
           <Route path='member' element={<div>멤버임</div>}/>
           <Route path='location' element={<div>위치정보임</div>}/>
@@ -85,10 +87,7 @@ function App() {
 function Card(props) {
   return (
     <div className='col-md-4'>
-      <img
-        src={process.env.PUBLIC_URL + "/s" + (props.i + 1) + ".png"}
-        width='80%'
-      ></img>
+      <img src={process.env.PUBLIC_URL + "/s" + (props.i + 1) + ".png"} width='80%'></img>
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.price}</p>
     </div>
