@@ -10,6 +10,7 @@ import data from "./data.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
 import axios from 'axios';
+import Cart from './routes/Cart.js'
 
  export let Context1 = createContext(); //contextAPI사용하기 위한 셋팅(1):context(state보관함)를 만들어주는 역할
 
@@ -78,15 +79,17 @@ function App() {
         <Route path='*' element={<div>404페이지</div>} /> 
 
         <Route path='/detail/:id' element={
-        <Context1.Provider value={{재고, shoes}}> {/*contextAPI사용하기 위한 셋팅(2)*/}
-        <Detail shoes={shoes}></Detail>
-        </Context1.Provider>
-        } />
+          <Context1.Provider value={{재고, shoes}}> {/*contextAPI사용하기 위한 셋팅(2)*/}
+          <Detail shoes={shoes}></Detail>
+          </Context1.Provider>
+          } />
 
         <Route path='/about' element={<About></About>}>
           <Route path='member' element={<div>멤버임</div>}/>
           <Route path='location' element={<div>위치정보임</div>}/>
         </Route>
+
+        <Route path='/cart' element={<Cart></Cart>}></Route>
 
       </Routes>
 
