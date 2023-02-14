@@ -9,9 +9,10 @@ import { useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
+import axios from 'axios';
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
 
   return (
@@ -50,9 +51,27 @@ function App() {
                   })}
                 </div>
               </div>
+              <button onClick={()=>{
+                // 로딩중UI 띄우기
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((결과)=>{console.log(결과.data);
+                  let copy = [...shoes,...결과.data];
+                  setShoes(copy);
+                  // 로딩중 UI 숨기기
+                })
+                .catch(()=>{
+                  // 로딩중 UI 숨기기
+                  console.log('요청 실패');
+                })
+                //(참고)동시에 axios요청 여러개하려면
+                // Promise.all([axios.get('/url1'), axios.get('/url2')]).then(()=>{
+                  //2개의 요청 성공했을 시 실행되는 코드 작성
+                // }) 
+              }}>더보기</button>
             </>
           }
         />
+
         <Route path='*' element={<div>404페이지</div>} /> 
 
         <Route path='/detail/:id' element={<Detail shoes={shoes}></Detail>} />
