@@ -31,7 +31,14 @@ let cart = createSlice({
     { id: 0, name: "White and Black", count: 2 },
     { id: 2, name: "Grey Yordan", count: 1 },
   ],
+  //state수정은 1.수정함수 만들고 2.export하고 3.import해서 사용
+  reducers : {
+    addCount(state, action){
+        state[action.payload].count++
+    }
+  }
 });
+export let {addCount} = cart.actions
 
 //state 등록하는 곳
 export default configureStore({
