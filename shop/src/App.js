@@ -5,15 +5,18 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import bg from "./img/mainbg.jpg";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
 import axios from 'axios';
 
+ export let Context1 = createContext(); //contextAPI사용하기 위한 셋팅(1):context(state보관함)를 만들어주는 역할
+
 function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+  let [재고] = useState([10,11,12]); //Detail, TabContent에서 쓰고싶음(contextAPI연습)
 
   return (
     <div className='App'>
@@ -74,7 +77,11 @@ function App() {
 
         <Route path='*' element={<div>404페이지</div>} /> 
 
-        <Route path='/detail/:id' element={<Detail shoes={shoes}></Detail>} />
+        <Route path='/detail/:id' element={
+        <Context1.Provider value={{재고, shoes}}> {/*contextAPI사용하기 위한 셋팅(2)*/}
+        <Detail shoes={shoes}></Detail>
+        </Context1.Provider>
+        } />
 
         <Route path='/about' element={<About></About>}>
           <Route path='member' element={<div>멤버임</div>}/>

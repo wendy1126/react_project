@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import {Nav} from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
+
+import { Context1 } from './../App.js';
 
 // styled-components 사용 예시
 // let YellowBtn = styled.button`
@@ -18,6 +20,9 @@ import {Nav} from 'react-bootstrap';
 // `
 
 function Detail(props) {
+
+  let {재고, shoes} = useContext(Context1); //보관함 해체해주는 함수
+
   let { id } = useParams();
   let 찾은상품 = props.shoes.find(function (x) {
     return x.id == id;
@@ -45,6 +50,8 @@ function Detail(props) {
       {alert == true ? (
         <div className='alert alert-warning'> 2초이내 구매시 할인 </div>
       ) : null}
+
+      {/* {재고[0]} *props전송없이도 App.js에 있던 state 잘나옴 확인 */}
 
       {/* {count}
       <button onClick={()=>{setCount(count+1)}}>버튼</button> */}
@@ -91,6 +98,8 @@ function Detail(props) {
 
 function TabContent({탭, shoes}){ //(props) 대신 ({변수명}) 넣고, if(props.탭==0)대신, if(탭==0)넣어도됨
 
+  let {재고} = useContext(Context1); //보관함 해체해주는 함수,Detail 뿐 아니라 그 자식들도 props 없이 사용 가능
+
   let [fade, setFade] = useState('');
 
   //state변경 때마다 end(애니메이션 효과 className) 부착
@@ -113,7 +122,7 @@ function TabContent({탭, shoes}){ //(props) 대신 ({변수명}) 넣고, if(pro
   // }
 
     //if문 대신 사용할 수 있는 코드
-  return (<div className={'start ' + fade}>{[<div>{shoes[0].title}</div>,<div>내용1</div>,<div>내용2</div>][탭]}</div>) 
+  return (<div className={'start ' + fade}>{[<div>{shoes[0].title}</div>,<div>{재고[1]}</div>,<div>내용2</div>][탭]}</div>) 
 }
 
 // function Detail(props) {
