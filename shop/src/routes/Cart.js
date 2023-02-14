@@ -35,7 +35,7 @@ function Cart() {
               <td>{state.cart[i].count}</td>
               <td><button onClick={()=>{
                 // dispatch(changeName()) //redux의 state 변경(3)dispatch(state변경함수())
-                dispatch(addCount(i)) //redux의 state 변경(3)dispatch(state변경함수())
+                dispatch(addCount(state.cart[i].id)) //버튼 옆의 id를 state 변경함수로 전송-payload와 같은 id 가진 상품 찾아서 +1 시켜줌
               }}>+</button></td>
             </tr>
           ))}

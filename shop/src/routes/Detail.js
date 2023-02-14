@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from 'react-bootstrap';
-
 import { Context1 } from './../App.js';
+import { addItem } from './../store.js';
+import { useDispatch } from 'react-redux';
 
 // styled-components 사용 예시
 // let YellowBtn = styled.button`
@@ -31,6 +32,7 @@ function Detail(props) {
   let [count, setCount] = useState(0);
   let [alert, setAlert] = useState(true);
   let [탭, 탭변경] = useState(0);
+  let dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -72,7 +74,9 @@ function Detail(props) {
           <h4 className='pt-5'>{찾은상품.title}</h4>
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}원</p>
-          <button className='btn btn-danger'>주문하기</button>
+          <button className='btn btn-danger' onClick={()=>{
+            dispatch(addItem({ id: 1, name: "Red Knit", count: 1 }))
+          }}>주문하기</button>
         </div>
       </div>
 

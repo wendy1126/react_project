@@ -34,11 +34,15 @@ let cart = createSlice({
   //state수정은 1.수정함수 만들고 2.export하고 3.import해서 사용
   reducers : {
     addCount(state, action){
-        state[action.payload].count++
+        let 번호 = state.findIndex((a)=>{return a.id == action.payload}) //array에서 원하는거 몇번째 있나 찾아주는 함수
+        state[번호].count++
+    },
+    addItem(state, action){
+        state.push(action.payload)
     }
   }
 });
-export let {addCount} = cart.actions
+export let {addCount,addItem} = cart.actions
 
 //state 등록하는 곳
 export default configureStore({
