@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from 'react-bootstrap';
 import { Context1 } from './../App.js';
-import { addItem } from './../store.js';
+import { addItem } from '../store.js';
 import { useDispatch } from 'react-redux';
 
 // styled-components 사용 예시
@@ -75,7 +75,7 @@ function Detail(props) {
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}원</p>
           <button className='btn btn-danger' onClick={()=>{
-            dispatch(addItem({ id: 1, name: "Red Knit", count: 1 }))
+            dispatch(addItem({ id: 찾은상품.id, name: 찾은상품.title, count: 찾은상품.count }))
           }}>주문하기</button>
         </div>
       </div>
