@@ -5,13 +5,19 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import bg from "./img/mainbg.jpg";
-import { createContext, useEffect, useState } from "react";
+import { createContext, lazy, useEffect, useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
-import Detail from './routes/Detail.js';
 import axios from 'axios';
-import Cart from './routes/Cart.js'
 import { useQuery } from 'react-query';
+
+// import Detail from './routes/Detail.js';
+// import Cart from './routes/Cart.js';
+//필요해질때 import 해주세요(사이트발행할때도 별도의 js파일로 분리됨)
+const Detail = lazy(()=>import('./routes/Detail.js'));
+const Cart = lazy(()=>import('./routes/Cart.js'));
+
+
 
  export let Context1 = createContext(); //contextAPI사용하기 위한 셋팅(1):context(state보관함)를 만들어주는 역할
 
