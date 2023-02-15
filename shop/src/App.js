@@ -5,19 +5,46 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import bg from "./img/mainbg.jpg";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
 import axios from 'axios';
 import Cart from './routes/Cart.js'
+import { useQuery } from 'react-query';
 
  export let Context1 = createContext(); //contextAPI사용하기 위한 셋팅(1):context(state보관함)를 만들어주는 역할
 
 function App() {
+
+  //LocalStorage에 obj,array자료 저장하는 법(원래는 문자형만 저장가능)-JSON으로 변환해서 저장
+  // let obj={name:'kim'}
+  // localStorage.setItem('data',JSON.stringify(obj)) //JSON으로 변환하는 법
+  // let 꺼낸거 = localStorage.getItem('data') //저장했던 자료 꺼내는 법
+  // JSON.parse(꺼낸거) //JSON->array/object 변환방법
+  // console.log(JSON.parse(꺼낸거).name); //JSON->array/object 변환방법 확인
+
+  useEffect(()=>{
+    localStorage.getItem('watched',JSON.stringify([]))
+  },[])
+
+
+
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
   let [재고] = useState([10,11,12]); //Detail, TabContent에서 쓰고싶음(contextAPI연습)
+
+  let result = useQuery('작명',()=>{
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
+      console.log('요청됨');
+      return a.data
+    }),
+    {staleTime:2000} //refetch되는 간격 설정
+  })
+
+  result.data //axios 요청 성공시 가져오는 데이터들
+  result.isLoading //axios 요청이 로딩 중일 때 true
+  result.error //axios 요청이 실패했을 때 true
 
   return (
     <div className='App'>
@@ -29,6 +56,12 @@ function App() {
             <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
             <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
+          </Nav>
+          <Nav className='ms-auto'>
+            {/* {result.isLoading ? '로딩중' : result.data.name} *삼항연산자 이용하여 로딩중&데이터출력 */}
+            {result.isLoading && '로딩중'}
+            {result.error && '에러남'}
+            {result.data && result.data.name}
           </Nav>
         </Container>
       </Navbar>

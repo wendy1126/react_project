@@ -34,6 +34,17 @@ function Detail(props) {
   let [탭, 탭변경] = useState(0);
   let dispatch = useDispatch();
 
+  //누가 Detail 페이지에 접속하면, 그 페이지에 보이는 상품id가져와서, localStorage에 watched 항목에 추가
+  useEffect(()=>{
+    let 꺼낸거 = localStorage.getItem('watched')
+    꺼낸거 = JSON.parse(꺼낸거)
+    꺼낸거.push(찾은상품.id) //array에 자료 추가하는 코드, 이미 있으면 push()하지마라
+    꺼낸거 = new Set(꺼낸거) //이미 있으면 push()하지마라. set자료형은 중복 제거해줌
+    꺼낸거 = Array.from(꺼낸거) // array -> Set -> array
+
+    localStorage.setItem('watched', JSON.stringify(꺼낸거))
+  },[])
+
 
   useEffect(() => {
     //useEffect 안에 적는 코드들은 1.어려운 연산 2.서버에서 데이터 가져오는 작업 3. 타이머 장착하는 것
