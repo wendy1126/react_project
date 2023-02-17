@@ -19,6 +19,7 @@ function Cart() {
 
   let dispatch = useDispatch(); //store.js로 요청보내주는 함수임
   let [count,setCount] = useState(0)
+  //let result = useMemo(()=>{return 복잡한함수()},[state]) : useMemo->컴포넌트 렌더링시 1회만 실행해줌, useEffect와 비교점 : useEffect는 html실행 다 끝나면 실행됨, useMemo는 렌더링 될 때 같이 실행됨(실행시점차이)
 
   console.log(state.cart[0].name);
 
