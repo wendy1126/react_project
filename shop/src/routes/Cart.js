@@ -1,7 +1,15 @@
+import { memo, useState } from 'react';
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCount } from './../store.js';
 import { changeName, increase } from './../store/userSlice.js';
+
+//memo의 원리
+//props가 변할 때만 재렌더링해줌(props가 길고 복잡하면 손해임)->꼭 필요한 무거운 컴포넌트에만 필요함
+let Child = memo( function(){ //자식 컴포넌트 재렌더링 막기, memo:꼭 필요할 때만 재렌더링해주세요
+  console.log('재렌더링됨');
+  return <div>자식임</div>
+})
 
 function Cart() {
   //Redux store 가져와줌, (state)=>{return state} 안의 state는 store안의 모든 state를 뜻함. 어떤 state만 쓸지 적을 수 있음->(state)=>{return state.user}
@@ -10,11 +18,14 @@ function Cart() {
   });
 
   let dispatch = useDispatch(); //store.js로 요청보내주는 함수임
+  let [count,setCount] = useState(0)
 
   console.log(state.cart[0].name);
 
   return (
     <div>
+        <Child count={count}></Child> {/**Cart컴포넌트 재렌더링 시 자식들도 전부 재렌더링됨 */}
+        <button onClick={()=>setCount(count+1)}>count state +1 변경 Cart컴포넌트 재렌더링</button>
         <h6>{state.user.name} {state.user.age}의 장바구니</h6>
         <button onClick={()=>{dispatch(increase(100))}}>버튼</button>
 
